@@ -133,7 +133,6 @@
 		});
 	}
 
-
 	function skipLinks () {
 		var links = $('.skip-links a');
 
@@ -153,24 +152,27 @@
 
 	function carousels () {
 		var dataSelector = 'data-carousel';
-		var loadElClass = 'bx-loading-el';
+		var loadElClass = 'bx-loading-el-wrap';
 		var targets = $('['+dataSelector+']');
+
 		function createCarousel () {
 			var self = $(this);
+			var container = self.closest('.carousel-container-wrap');
 			var classAttr = self.attr('data-class');
 			var optionsAttr = self.attr(dataSelector);
 			var options = JSON.parse(optionsAttr);
 			var loadEl = null;
 
 			function removeLoader () {
-				$('.'+loadElClass, self).remove();
+				setTimeout(function () {
+					TM.to( $('.'+loadElClass, container), 1, { easing: tmEasing, opacity: 0, scale: 0.9, onComplete: function () {
+						$('.'+loadElClass, container).hide();
+					} });
+				}, 500);
 			}
-
-			options = $.extend({}, options, { onSliderLoad: removeLoader })
-			self.bxSlider(options).closest('.bx-wrapper').addClass(classAttr);
-			self.after('<div class="'+loadElClass+'" />');
-
-			TM.to(searchForm, 0.45, { easing: tmEasing, height: 0 });
+			
+			var optsCombined = $.extend({}, options, { onSliderLoad: removeLoader });
+			self.bxSlider(optsCombined).closest('.bx-wrapper').addClass(classAttr);
 		}	
 		targets.each(createCarousel);
 	}

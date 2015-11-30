@@ -4,19 +4,39 @@ block headerIncludes
 
 block content
 	.container
-		h1 'Allo, 'Allo!
-		p You now have
+		p // HEADINGS //
+		h1 Heading 1
+		h2 Heading 2
+		h3 Heading 3
+		h4 Heading 4
+		h5 Heading 5
+		h6 Heading 6
+		hr
+			
+		p // LISTS //
 		ul
-			li HTML5 Boilerplate
-			li Sass
-			li Modernizr
-			li jQuery
+			li Unordered list item 1
+			li
+				a(href="") Unordered list with link
+		ol
+			li Ordered list item 1
+			li
+				a(href="") Ordered list with link
+		hr
 
-		+btn('test button', 'javascript:;')(class='dean')
+		p // BUTTONS //
+		p
+			+btn('test button', 'javascript:;')
+		p
+			+btn('test button', 'javascript:;')(class='btn-theme-1')
 
-		+carousel('{ "speed": 1500, "autoStart": true }')
+		hr
+		p // CAROUSELS //
+		+carousel('{ "speed": 1500, "auto": true, "autoControls": true, "autoControlsCombine": true, "autoStart": true }')
 			+carousel-slide('https://placeimg.com/960/480/nature')
-				p test 1
+				p Slide 1 title
+				p
+					+btn('Slide 1 CTA', 'javascript:;')
 			+carousel-slide('https://placeimg.com/960/480/people')
 				p test 2
 			+carousel-slide('https://placeimg.com/960/480/tech')

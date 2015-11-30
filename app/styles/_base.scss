@@ -152,24 +152,15 @@ select {
 	}
 
 	&-theme {
-		&-1,
-		&-2,
-		&-3 {
-			color: c(white);
-			border-color: c(main1);
-			&:hover,
-			&:focus {
-				border-color: c(main1);
-				background: c(white);
-			}
-		}
 		&-1 {
+			color: c(white);
+			background: c(main2);
+			border-color: c(main2);
 			&:hover,
 			&:focus {
-				color: c(white);
-				background-color: c(main1);
+				background: c(main2, dark);
+				border-color: c(main2, dark);
 			}
-			@include ff(heading);
 		}
 	}
 }
