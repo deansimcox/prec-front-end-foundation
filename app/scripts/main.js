@@ -177,10 +177,75 @@
 		targets.each(createCarousel);
 	}
 
+	function modals () {
+		// set the default class name
+		vex.defaultOptions.className = 'vex-default';
+
+		/*
+			Monkey patch for closeByID function
+			https://github.com/HubSpot/vex/issues/142
+		 */
+		var animationEndSupport = false;
+		(function(){
+			var s;
+			s = (document.body || document.documentElement).style;
+			animationEndSupport = s.animation !== void 0 || s.WebkitAnimation !== void 0 || s.MozAnimation !== void 0 || s.MsAnimation !== void 0 || s.OAnimation !== void 0;
+			return $(window).bind('keyup.vex', function(event) {
+				if (event.keyCode === 27) {
+					return vex.closeByEscape();
+				}
+			});
+		}());
+		vex._closeByID = vex.closeByID;
+		vex.closeByID = function(id) {
+			var $vex, $vexContent, beforeClose, close, hasAnimation, options;
+			$vexContent = vex.getVexByID(id);
+			if (!$vexContent.length) {
+				return;
+			}
+			$vex = $vexContent.data().vex.$vex;
+			options = $.extend({}, $vexContent.data().vex);
+			beforeClose = function() {
+				if (options.beforeClose) {
+					return options.beforeClose($vexContent, options);
+				}
+			};
+			close = function() {
+				$vexContent.trigger('vexClose', options);
+				$vex.remove();
+				$('body').trigger('vexAfterClose', options);
+				if (options.afterClose) {
+					return options.afterClose($vexContent, options);
+				}
+			};
+			hasAnimation = $vexContent.css('animationName') !== 'none' && $vexContent.css('animationDuration') !== '0s';
+			if (animationEndSupport && hasAnimation) {
+				if (beforeClose() !== false) {
+					$vex.unbind(vex.animationEndEvent).bind(vex.animationEndEvent, function() {
+						return close();
+					}).addClass(vex.baseClassNames.closing);
+				}
+			} else {
+				if (beforeClose() !== false) {
+					close();
+				}
+			}
+			return true;
+		};
+
+		// js to bind click event to open modal
+		$('.js-modal-open').on('click', function () {
+			vex.open({
+				content: '<div>Content</div>'
+			});
+		});
+	}
+
 	$(function () {
 		menuMobile();
 		responsive();
 		skipLinks();
 		carousels();
+		modals();
 	});
 }(jQuery, TweenMax));

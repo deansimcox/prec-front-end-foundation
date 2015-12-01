@@ -16,7 +16,9 @@ const dependencies = {
 			'bower_components/jquery/dist/jquery.js', 
 			'bower_components/bxslider-4/dist/jquery.bxslider.js',
 			'bower_components/gsap/src/uncompressed/TweenMax.js',
-			'bower_components/enquire/dist/enquire.js'
+			'bower_components/enquire/dist/enquire.js',
+			'bower_components/vex/js/vex.js',
+			'bower_components/vex/js/vex.dialog.js'
 		],
 		css: [
 			'bower_components/font-awesome/css/font-awesome.css'

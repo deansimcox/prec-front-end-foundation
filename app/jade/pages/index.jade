@@ -26,9 +26,9 @@ block content
 
 		p // BUTTONS //
 		p
-			+btn('test button', 'javascript:;')
+			+btn('Button with default theme', 'javascript:;')(class='other-class-name')
 		p
-			+btn('test button', 'javascript:;')(class='btn-theme-1')
+			+btn-1('Button with alt theme', 'javascript:;')(class='other-class-name')
 
 		hr
 		p // CAROUSELS //
@@ -45,5 +45,10 @@ block content
 				p test 4
 			+carousel-slide('https://placeimg.com/960/480/arch')
 				p test 4
+
+		hr
+		p // MODALS //
+		p
+			+btn('Button with modal', 'javascript:;')(class='js-modal-open')
 
 block footerIncludes

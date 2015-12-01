@@ -2,8 +2,12 @@
 //-	mixin for generic button
 mixin btn(title, url)
 	a(href=url, class="btn")&attributes(attributes)= title
-	
 
+//- mixin for btn with alt theme
+mixin btn-1(title, url)
+	a(href=url, class="btn btn-theme-1")&attributes(attributes)= title
+	
+//- mixin for carousel container
 mixin carousel(options)
 	div(class="carousel-container-wrap")
 		div.bx-loading-el-wrap
@@ -12,6 +16,7 @@ mixin carousel(options)
 			if block
 				block
 
+//- mixin for carousel slide
 mixin carousel-slide(imageURL)
 	div(class="carousel-slide", style="background-image: url(#{imageURL})")&attributes(attributes)
 		if block
