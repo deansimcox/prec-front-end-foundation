@@ -1,9 +1,23 @@
 'use strict';
-
 /*
 	Globals Power2, enquire, TweenMax
  */
 
+
+/*
+	console.log() polyfill
+ */
+(function(w) {
+	w.console = w.console || {
+		log: function () {}
+	};
+})(typeof window === 'undefined' ? this : window);
+
+
+
+/*
+	Main app
+ */
 (function ($, TM) {
 	/*
 		Default Media queries - Should match exactly with the media queries in '_config-utilities.scss'
