@@ -38,6 +38,12 @@
       "es6": true,
       "jquery": true
     },
+    "globals": {
+      "Power2": true,
+      "enquire": true,
+      "TweenMax": true,
+      "vex": true
+    },
     "rules": {
       "accessor-pairs": 2,
       "brace-style": [
@@ -145,7 +151,7 @@
       "no-multiple-empty-lines": [
         2,
         {
-          "max": 1
+          "max": 5
         }
       ],
       "no-native-reassign": 2,

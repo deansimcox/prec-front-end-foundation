@@ -16,12 +16,22 @@ block content
 		p // LISTS //
 		ul
 			li Unordered list item 1
+				ul
+					li Unordered sub list item 1
+					li Unordered sub list item 2
+					li Unordered sub list item 3
 			li
 				a(href="") Unordered list with link
+			li Unordered list item 3
 		ol
 			li Ordered list item 1
+				ol
+					li Ordered sub list item 1
+					li Ordered sub list item 2
+					li Ordered sub list item 3
 			li
 				a(href="") Ordered list with link
+			li Ordered list item 3
 		hr
 
 		p // BUTTONS //
@@ -69,6 +79,9 @@ block content
 					option(value="") option 1
 					option(value="") option 2
 					option(value="") option 3
+			div.form-row
+				label(for="select1", class="visuallyhidden") select label
+				button.btn Submit btn
 
 		hr
 		p // TABLES //

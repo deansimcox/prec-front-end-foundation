@@ -13,7 +13,7 @@ const reload = browserSync.reload;
 const dependencies = {
 	concat: {
 		js: [
-			'bower_components/jquery/dist/jquery.js', 
+			'bower_components/jquery/dist/jquery.js',
 			'bower_components/bxslider-4/dist/jquery.bxslider.js',
 			'bower_components/gsap/src/uncompressed/TweenMax.js',
 			'bower_components/enquire/dist/enquire.js',

@@ -1,13 +1,11 @@
 'use strict';
-/*
-	Globals Power2, enquire, TweenMax
- */
+
 
 
 /*
 	console.log() polyfill
  */
-(function(w) {
+(function (w) {
 	w.console = w.console || {
 		log: function () {}
 	};
@@ -45,17 +43,18 @@
 		var body = $('body');
 		var viewport = $('.page-viewport');
 		var btnClose = $('.nav-close-mob');
+		var primaryNav = $('.primary-nav');
 		var aClass = 'active';
 		var oClass = 'open';
 		var oNavClass = 'primary-nav-open';
 
 		function focusMenu () {
 			if (body.hasClass(oNavClass)) {
-				$('.primary-nav a').removeAttr('tabindex');
-				$('.primary-nav').attr('tabindex', '-1').focus();
+				$('a', primaryNav).removeAttr('tabindex');
+				primaryNav.attr('tabindex', '-1').focus();
 			} else {
-				$('.primary-nav a').attr('tabindex', '-1');
-				$('.primary-nav').removeAttr('tabindex');
+				$('a', primaryNav).attr('tabindex', '-1');
+				primaryNav.removeAttr('tabindex');
 			}
 		}
 
@@ -66,6 +65,7 @@
 		}
 
 		function openMenu () {
+			primaryNav.show();
 			TM.to(viewport, 0.6, { easing: tmEasing, onComplete: focusMenu, x: '-70%' });
 			body.addClass(oNavClass);
 		}
@@ -74,6 +74,7 @@
 			TM.to(viewport, 0.6, { easing: tmEasing, onComplete: function () {
 				focusMenu();
 				body.removeClass(oNavClass);
+				primaryNav.hide();
 			}, x: '0%' });
 		}
 
@@ -113,6 +114,23 @@
 			}
 		}
 
+		// do responsive things to primary-nav
+		enquire.register(mq.xs, {
+			setup: function () {
+				if (window.matchMedia(mq.xs).matches) {
+					primaryNav.hide();
+				} else {
+					primaryNav.show();
+				}
+			},
+			match: function () {
+				primaryNav.hide();
+			},
+			unmatch: function () {
+				primaryNav.show();
+			}
+		});
+
 		btnMenu.on('click', toggleMenu);
 		btnClose.on('click', closeMenuBtn);
 
@@ -127,7 +145,7 @@
 	 */
 	function responsive () {
 		var toggleMobileEls = $('.site-header_search-wrap');
-		enquire.register( mq.xs , {
+		enquire.register(mq.xs, {
 			setup: function () {
 				if (window.matchMedia(mq.xs).matches) {
 					// do mobile stuff
@@ -167,7 +185,7 @@
 	function carousels () {
 		var dataSelector = 'data-carousel';
 		var loadElClass = 'bx-loading-el-wrap';
-		var targets = $('['+dataSelector+']');
+		var targets = $('[' + dataSelector + ']');
 
 		function createCarousel () {
 			var self = $(this);
@@ -175,19 +193,19 @@
 			var classAttr = self.attr('data-class');
 			var optionsAttr = self.attr(dataSelector);
 			var options = JSON.parse(optionsAttr);
-			var loadEl = null;
 
 			function removeLoader () {
 				setTimeout(function () {
-					TM.to( $('.'+loadElClass, container), 1, { easing: tmEasing, opacity: 0, scale: 0.9, onComplete: function () {
-						$('.'+loadElClass, container).hide();
+					var target = $('.' + loadElClass, container);
+					TM.to(target, 1, { easing: tmEasing, opacity: 0, scale: 0.9, onComplete: function () {
+						target.hide();
 					} });
 				}, 500);
 			}
-			
+
 			var optsCombined = $.extend({}, options, { onSliderLoad: removeLoader });
 			self.bxSlider(optsCombined).closest('.bx-wrapper').addClass(classAttr);
-		}	
+		}
 		targets.each(createCarousel);
 	}
 
@@ -200,18 +218,19 @@
 			https://github.com/HubSpot/vex/issues/142
 		 */
 		var animationEndSupport = false;
-		(function(){
+		(function () {
 			var s;
 			s = (document.body || document.documentElement).style;
 			animationEndSupport = s.animation !== void 0 || s.WebkitAnimation !== void 0 || s.MozAnimation !== void 0 || s.MsAnimation !== void 0 || s.OAnimation !== void 0;
-			return $(window).bind('keyup.vex', function(event) {
+			return $(window).bind('keyup.vex', function (event) {
 				if (event.keyCode === 27) {
 					return vex.closeByEscape();
 				}
 			});
 		}());
-		vex._closeByID = vex.closeByID;
-		vex.closeByID = function(id) {
+		vex.closeByIdOld = vex.closeByID;
+		vex.closeByID = function (id) {
+			/*eslint consistent-return: 0*/
 			var $vex, $vexContent, beforeClose, close, hasAnimation, options;
 			$vexContent = vex.getVexByID(id);
 			if (!$vexContent.length) {
@@ -219,12 +238,12 @@
 			}
 			$vex = $vexContent.data().vex.$vex;
 			options = $.extend({}, $vexContent.data().vex);
-			beforeClose = function() {
+			beforeClose = function () {
 				if (options.beforeClose) {
 					return options.beforeClose($vexContent, options);
 				}
 			};
-			close = function() {
+			close = function () {
 				$vexContent.trigger('vexClose', options);
 				$vex.remove();
 				$('body').trigger('vexAfterClose', options);
@@ -235,7 +254,7 @@
 			hasAnimation = $vexContent.css('animationName') !== 'none' && $vexContent.css('animationDuration') !== '0s';
 			if (animationEndSupport && hasAnimation) {
 				if (beforeClose() !== false) {
-					$vex.unbind(vex.animationEndEvent).bind(vex.animationEndEvent, function() {
+					$vex.unbind(vex.animationEndEvent).bind(vex.animationEndEvent, function () {
 						return close();
 					}).addClass(vex.baseClassNames.closing);
 				}
