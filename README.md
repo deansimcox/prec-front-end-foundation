@@ -8,7 +8,7 @@ Pre-requisites include Node.js, Ruby, Python and Visual Studio. This seems like 
  1. Install [node.js](https://nodejs.org/en/download/). Add to PATH if prompted.
  2. Install [Ruby](http://rubyinstaller.org/). Add to PATH if prompted.
  3. Install [Python](https://www.python.org/downloads/). Add to PATH if prompted.
- 4. If you don't not have visual studio installed, downlaod the free community version from [here](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx).
+ 4. If you don't not have visual studio installed, [download the free community version from here](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx).
 
 Now that you have all of the above:
  1. Open up a command prompt and type 'npm install -g bower'.
